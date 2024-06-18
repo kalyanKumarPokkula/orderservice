@@ -22,7 +22,7 @@ public class Order {
     @Column( name = "order_id")
     private Long id;
 
-    private Long userId;
+    private Integer userId;
     private Double totalAmount;
 
     @Enumerated(EnumType.STRING)
@@ -34,11 +34,16 @@ public class Order {
     @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL , orphanRemoval = true)
     private List<OrderItem> items;
 
+    @OneToOne(mappedBy = "order" , cascade = CascadeType.ALL)
+    private Shipping shipping;
+
 
     @PrePersist
     protected void onCreate(){
         this.createdAt = LocalDateTime.now();
+        this.status = Status.PENDING;
     }
+
 
     @PreUpdate
     protected  void onUpdate(){
