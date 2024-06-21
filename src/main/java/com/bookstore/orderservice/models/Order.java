@@ -1,6 +1,7 @@
 package com.bookstore.orderservice.models;
 
 import com.bookstore.orderservice.enums.Status;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "order_id-seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "order_id_seq")
     @SequenceGenerator(name = "order_id_seq" , sequenceName = "ORDER_ID_SEQ" , initialValue = 1)
     @Column( name = "order_id")
     private Long id;
@@ -32,9 +33,11 @@ public class Order {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @JsonManagedReference(value = "order-orderItem")
     private List<OrderItem> items;
 
-    @OneToOne(mappedBy = "order" , cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "orderShipping" , cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "order-shipping")
     private Shipping shipping;
 
 

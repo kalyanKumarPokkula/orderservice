@@ -1,9 +1,12 @@
 package com.bookstore.orderservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +21,7 @@ public class Address {
     @Column(name = "address_id")
     private Long id;
 
+    @Column(unique = true)
     private Integer userId;
 
     @Column(name = "first_name" , nullable = false)
@@ -28,7 +32,8 @@ public class Address {
     @Column(name = "phone_number" , nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
+
+    @Column(name = "address_line1", nullable = false)
     private String addressLine1;
 
     private String addressLine2;
@@ -45,7 +50,8 @@ public class Address {
     @Column(name = "postal_code" , nullable = false)
     private String postalCode;
 
-    @OneToOne(mappedBy = "shippingAddress" , cascade = CascadeType.ALL)
-    private Shipping shipping;
+    @OneToMany(mappedBy = "shippingAddress" , cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Shipping> shippingAddress;
 
 }
