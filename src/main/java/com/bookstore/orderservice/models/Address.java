@@ -17,12 +17,14 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "address_id_seq")
-    @SequenceGenerator(name = "address_id_seq" , sequenceName = "ADDRESS_ID_SEQ" ,initialValue = 1)
+    @SequenceGenerator(name = "address_id_seq" , sequenceName = "ADDRESS_ID_SEQ" ,initialValue = 1,allocationSize = 1)
     @Column(name = "address_id")
     private Long id;
 
     @Column(unique = true)
     private Integer userId;
+    
+    private String email;
 
     @Column(name = "first_name" , nullable = false)
     private String firstName;

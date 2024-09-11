@@ -19,12 +19,12 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "order_id_seq")
-    @SequenceGenerator(name = "order_id_seq" , sequenceName = "ORDER_ID_SEQ" , initialValue = 1)
+    @SequenceGenerator(name = "order_id_seq" , sequenceName = "ORDER_ID_SEQ" , initialValue = 1,allocationSize = 1)
     @Column( name = "order_id")
     private Long id;
 
     private Integer userId;
-    private Double totalAmount;
+    private Double totalAmount = 0.0;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -40,6 +40,9 @@ public class Order {
     @JsonManagedReference(value = "order-shipping")
     private Shipping shipping;
 
+    @OneToOne(mappedBy = "orderPayment", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "order-payment")
+    private Payment payment;
 
     @PrePersist
     protected void onCreate(){

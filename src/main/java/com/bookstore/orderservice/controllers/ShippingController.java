@@ -15,6 +15,7 @@ public class ShippingController {
 
     @PostMapping("/shipping")
     public Shipping createShipping(@RequestBody Shipping shipping , @RequestParam Long orderId , @RequestParam Long addressId){
+        System.out.println(shipping.toString());
         return shippingService.createShipping(shipping,orderId,addressId);
     }
 }

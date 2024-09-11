@@ -19,7 +19,7 @@ public class Shipping {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "Shipping_id_seq")
-    @SequenceGenerator(name = "shipping_id_seq" , sequenceName = "SHIPPING_ID_SEQ" , initialValue = 1)
+    @SequenceGenerator(name = "shipping_id_seq" , sequenceName = "SHIPPING_ID_SEQ" , initialValue = 1,allocationSize = 1)
     @Column(name = "shipping_id")
     private Long id;
 
@@ -28,7 +28,7 @@ public class Shipping {
     private LocalDate deliveryDate;
 
     @Enumerated(EnumType.STRING)
-    private ShippingMethod ShippingMethod;
+    private ShippingMethod ShippingMethod = com.bookstore.orderservice.enums.ShippingMethod.STANDARD;
 
     @OneToOne
     @JoinColumn(name = "order_id")
